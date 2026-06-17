@@ -109,6 +109,7 @@ const SearchBar = <T extends Toggle>({
       <Animated.View style={[styles.bar, bar]}>
         <TextInput
           ref={inputRef}
+          testID="search-input"
           style={styles.input}
           placeholder={placeholder}
           value={value}

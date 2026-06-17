@@ -4,11 +4,7 @@
     "slug": "pocketgear",
     "scheme": "pocketgear",
     "privacy": "public",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,11 +17,10 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/85bcb0f0-d130-11e6-b8eb-59d1587e6774"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.pocketgear"
     },
     "androidStatusBar": {
       "translucent": true
@@ -39,9 +34,7 @@
     "web": {
       "favicon": "./assets/icon.png"
     },
-    "plugins": [
-      "expo-font"
-    ],
+    "plugins": ["expo-font", "expo-detox-config-plugin"],
     "runtimeVersion": {
       "policy": "appVersion"
     },
