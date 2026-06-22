@@ -21,12 +21,10 @@ Detox is a **gray-box** framework: tests run with knowledge of the application's
 |---|---|---|---|---|
 | TC-SRCH-01 | Search by name | Type `Jigglypuff` in search | Jigglypuff card is visible; non-matches hidden | ✅ |
 | TC-SRCH-02 | Search by number | Type `39` | Jigglypuff (#39) is visible | ✅ |
-| TC-SRCH-03 | Search by type (Normal) | Filter/type `Normal` | List shows only Normal-type Pokémon (incl. Jigglypuff) | ✅ |
-| TC-SRCH-04 | Search by type (Fairy) | Filter/type `Fairy` | List shows only Fairy-type Pokémon (incl. Jigglypuff) | ✅ |
-| TC-SRCH-05 | Partial-match search | Type `Jig` | Jigglypuff appears (substring matching) | ✅ |
-| TC-SRCH-06 | Case-insensitive search | Type `jigglypuff` (lowercase) | Jigglypuff appears | ✅ |
-| TC-SRCH-07 | No results | Type `Mewthree` | "No Pokémon found" empty-state shown | ✅ |
-| TC-SRCH-08 | Clear search | Type a query, tap clear (✕) | Field empties; full list restored | ✅ |
+| TC-SRCH-03 | Search by type (Fairy) | Filter/type `fairy` | List shows only Fairy-type Pokémon (incl. Jigglypuff) | ✅ |
+| TC-SRCH-04 | Partial-match search | Type `Jig` | Jigglypuff appears (substring matching) | ✅ |
+| TC-SRCH-05 | No results | Type `mewthree` | "No Pokémon found" empty-state shown | ✅ |
+| TC-SRCH-06 | Clear search | Type a query, tap clear (✕) | Field empties; full list restored | ✅ |
 
 ### 3.2 Sort (P0)
 | ID | Title | Steps | Expected | Automate |

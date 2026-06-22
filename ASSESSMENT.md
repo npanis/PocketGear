@@ -41,4 +41,4 @@ npx detox build --configuration ios.sim.debug
 
 ## 4. Run the E2E tests
 
-bashnpx detox test --configuration ios.sim.debug
+npx detox test --configuration ios.sim.debug

@@ -1,5 +1,5 @@
 /* global device, element, by */
-describe('Test Sample', () => {
+describe('PocketGear - Smoke Tests', () => {
   beforeAll(async () => {
     await device.launchApp();
   });
@@ -8,7 +8,11 @@ describe('Test Sample', () => {
     await device.reloadReactNative();
   });
 
-  test('should have the search text box', async () => {
+  test('displays the search bar on launch', async () => {
     await expect(element(by.id('search-input'))).toBeVisible();
+  });
+
+  test('displays the Pokémon list on launch', async () => {
+    await expect(element(by.id('pokemon-list'))).toBeVisible();
   });
 });

@@ -32,6 +32,7 @@ const PokemonList = React.forwardRef(
     return (
       <GridView<Pokemon>
         {...rest}
+        testID="pokemon-list"
         data={data}
         pageSize={2}
         style={[styles.grid, style]}

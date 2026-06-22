@@ -32,6 +32,7 @@ function PokemonListCardInner({ pokemon, style }: Props) {
   return (
     <PlatformPressable
       key={pokemon.name}
+      testID={`pokemon-card-${pokemon.id}`}
       onPress={onPress}
       pressOpacity={0.7}
       style={[styles.block, { backgroundColor: color }, style]}

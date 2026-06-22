@@ -129,6 +129,7 @@ const SearchBar = <T extends Toggle>({
         </TouchableOpacity>
         {value ? (
           <TouchableOpacity
+            testID="clear-search"
             onPress={onClearPress}
             style={[styles.touchable, styles.clear]}
           >

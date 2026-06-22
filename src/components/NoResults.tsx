@@ -14,7 +14,7 @@ type Props = {
 
 function NoResults({ source, label }: Props) {
   return (
-    <View style={styles.container}>
+    <View testID="no-result" style={styles.container}>
       <Image style={styles.item} source={source} />
       <Text style={styles.label}>{label}</Text>
     </View>
