@@ -52,7 +52,7 @@ function PokemonDetails() {
   ]);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView testID="pokemon-details" style={styles.container}>
       <View style={styles.content}>
         <View style={styles.item}>
           <Heading selectable>{pokemon.category}</Heading>

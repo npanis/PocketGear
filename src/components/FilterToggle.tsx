@@ -16,7 +16,7 @@ type Props = {
 
 export default function NoResults({ active, label, onPress }: Props) {
   return (
-    <Pressable onPress={onPress}>
+    <Pressable testID={`sort-${label}`} onPress={onPress}>
       <View style={[styles.toggle, active && styles.active]}>
         <Text style={[styles.label, active && styles.activeLabel]}>
           {label}

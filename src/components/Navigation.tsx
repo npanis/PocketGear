@@ -90,8 +90,14 @@ const InfoTabs = createMaterialTopTabNavigator({
     tabBarInactiveTintColor: '#222',
   },
   screens: {
-    Details: PokemonDetails,
-    Matches: PokemonMatches,
+    Details: {
+      screen: PokemonDetails,
+      options: { tabBarButtonTestID: 'tab-details' },
+    },
+    Matches: {
+      screen: PokemonMatches,
+      options: { tabBarButtonTestID: 'tab-matches' },
+    },
   },
 });
 

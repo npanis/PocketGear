@@ -62,6 +62,7 @@ function PokemonMatches() {
 
   return (
     <ScrollView
+      testID="pokemon-matches"
       style={styles.container}
       contentContainerStyle={styles.content}
       onLayout={onLayout}
@@ -74,7 +75,11 @@ function PokemonMatches() {
           <View style={styles.row}>
             <PokemonListCard pokemon={strongAgainstFirst} style={cardStyle} />
             {strongAgainstPokemons.length > 1 && (
-              <More onPress={onStrongPress} style={cardStyle} />
+              <More
+                onPress={onStrongPress}
+                style={cardStyle}
+                testID="more-strong"
+              />
             )}
           </View>
         </View>
@@ -88,7 +93,11 @@ function PokemonMatches() {
           <View style={styles.row}>
             <PokemonListCard pokemon={weakAgainstFirst} style={cardStyle} />
             {weakAgainstPokemons.length > 1 && (
-              <More onPress={onWeakPress} style={cardStyle} />
+              <More
+                onPress={onWeakPress}
+                style={cardStyle}
+                testID="more-weak"
+              />
             )}
           </View>
         </View>

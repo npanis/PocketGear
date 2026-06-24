@@ -9,18 +9,14 @@ This repository is a fork. The application code is the original author's (satya1
 
 ##Prerequisites (macOS — iOS Simulator target)
 
-
 Xcode with an iOS Simulator runtime installed (Xcode → Settings → Components)
 Node, Watchman, CocoaPods, applesimutils
 
-
-bash  brew install node watchman cocoapods
-  brew tap wix/brew && brew install applesimutils
-
+bash brew install node watchman cocoapods
+brew tap wix/brew && brew install applesimutils
 
 Yarn via Corepack (corepack enable)
 Detox + expo-detox-config-plugin (the community Detox plugin for Expo SDK 54+) — already in devDependencies
-
 
 ## 1. Install dependencies
 
@@ -33,10 +29,9 @@ bashnpx expo run:ios
 The Simulator boots and opens PocketGear, a browsable, searchable Pokédex.
 (PocketGear is an Expo SDK 54 app; this command auto-generates the native iOS project, then builds and launches it.)
 
-
 ## 3. Build the app for Detox
 
-bashnpx expo prebuild --clean        # regenerate native project with the Detox plugin applied
+bashnpx expo prebuild --clean # regenerate native project with the Detox plugin applied
 npx detox build --configuration ios.sim.debug
 
 ## 4. Run the E2E tests
