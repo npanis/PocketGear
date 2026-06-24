@@ -1,11 +1,7 @@
 /* global device, element, by */
 describe('Open Profile Card', () => {
-  beforeAll(async () => {
-    await device.launchApp();
-  });
-
   beforeEach(async () => {
-    await device.reloadReactNative();
+    await device.launchApp({ newInstance: true });
     await element(by.id('pokemon-card-1')).tap();
   });
 

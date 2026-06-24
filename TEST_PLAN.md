@@ -14,74 +14,86 @@ Detox is a **gray-box** framework: tests run with knowledge of the application's
 
 - **Stable selectors** — `testID`s added to components under test, for reliable, maintainable element matching.
 - **Automatic synchronization** — no fixed delays; Detox waits on the app's actual idle state, reducing flakiness.
-- **Business-logic validation** — verifying the app's _computed_ results (sort order, type match-ups) are correct, not merely present.
+- **Business-logic validation** — assertions are driven by the app's _computed_ data using known Pokémon as oracles (e.g. Mewtwo #150 tops Attack and Max CP, Shuckle #213 tops Defense, Abra #63 is alphabetical first), rather than arbitrary fixtures. Sort cases assert the **top-of-list** item via a regex matcher (`by.id(/^pokemon-card-\d+$/).atIndex(0)`), proving order rather than mere presence.
 
 ---
 
 ## 3. Test Cases
 
-### 3.1 Search (P0)
+### 3.0 Smoke (P0) — `smoke.test.js`
 
-| ID         | Title                  | Steps                       | Expected                                              | Automate |
-| ---------- | ---------------------- | --------------------------- | ----------------------------------------------------- | -------- |
-| TC-SRCH-01 | Search by name         | Type `Jigglypuff` in search | Jigglypuff card is visible; non-matches hidden        | ✅       |
-| TC-SRCH-02 | Search by number       | Type `39`                   | Jigglypuff (#39) is visible                           | ✅       |
-| TC-SRCH-03 | Search by type (Fairy) | Filter/type `fairy`         | List shows only Fairy-type Pokémon (incl. Jigglypuff) | ✅       |
-| TC-SRCH-04 | Partial-match search   | Type `Jig`                  | Jigglypuff appears (substring matching)               | ✅       |
-| TC-SRCH-05 | No results             | Type `mewthree`             | "No Pokémon found" empty-state shown                  | ✅       |
-| TC-SRCH-06 | Clear search           | Type a query, tap clear (✕) | Field empties; full list restored                     | ✅       |
+| Title                  | Steps         | Expected                            | Automate |
+| ---------------------- | ------------- | ----------------------------------- | -------- |
+| Search bar on launch   | Launch app    | `search-input` is visible           | ✅       |
+| Pokémon list on launch | Launch app    | `pokemon-list` is visible           | ✅       |
 
-### 3.2 Sort (P0)
+### 3.1 Search (P0) — `search.test.js`
 
-| ID         | Title           | Steps         | Expected                                        | Automate |
-| ---------- | --------------- | ------------- | ----------------------------------------------- | -------- |
-| TC-SORT-01 | Sort by #       | Tap `#`       | List ordered ascending by number; first item #1 | ✅       |
-| TC-SORT-02 | Sort by Name    | Tap `Name`    | List ordered alphabetically (A→Z)               | ✅       |
-| TC-SORT-03 | Sort by Attack  | Tap `Attack`  | Highest-attack first → **Mewtwo** at top        | ✅       |
-| TC-SORT-04 | Sort by Defense | Tap `Defense` | Highest-defense first → **Shuckle** at top      | ✅       |
-| TC-SORT-05 | Sort by Max CP  | Tap `Max CP`  | Highest CP first → **Mewtwo** at top            | ✅       |
+| Title                  | Steps                          | Expected                                       | Automate |
+| ---------------------- | ------------------------------ | ---------------------------------------------- | -------- |
+| Search by name         | Type `jigglypuff` in search    | Jigglypuff card (#39) is visible               | ✅       |
+| Partial-match search   | Type `jig`                     | Jigglypuff (#39) appears (prefix matching)     | ✅       |
+| Search by number       | Type `140`                     | Kabuto (#140) is visible                       | ✅       |
+| Search by type (Fairy) | Type `fairy`                   | Jigglypuff (#39, a Fairy type) is visible      | ✅       |
+| No results             | Type `mewthree`, tap return    | "No Pokémon found" empty-state shown           | ✅       |
+| Clear search           | Type `squirtle`, tap clear (✕) | Field empties; full list restored (#1 visible) | ✅       |
 
-### 3.3 Pokémon Profile (P1)
+### 3.2 Sort (P0) — `sort.test.js`
 
-| ID         | Title                 | Steps              | Expected                                         | Automate |
-| ---------- | --------------------- | ------------------ | ------------------------------------------------ | -------- |
-| TC-PROF-01 | Open profile          | Tap a Pokémon card | Profile screen opens                             | ✅       |
-| TC-PROF-02 | Two sections present  | On profile         | Both **Details** and **Matches** sections render | ✅       |
-| TC-PROF-03 | Details complete      | Inspect Details    | Details are present                              | ✅       |
-| TC-PROF-04 | Match-ups present     | Inspect Matches    | "Strong against" and "Weak against" both shown   | ✅       |
-| TC-PROF-05 | Strong "More" expands | Tap **More**       | Additional related Pokémon are listed            | ✅       |
-| TC-PROF-06 | Weak "More" expands   | Tap **More**       | Additional related Pokémon are listed            | ✅       |
+| Title           | Steps         | Expected                                                | Automate |
+| --------------- | ------------- | ------------------------------------------------------- | -------- |
+| Sort by #       | Tap `#`       | Top of list is #1 (Bulbasaur)                           | ✅       |
+| Sort by Name    | Tap `Name`    | Top of list is #63 (Abra), alphabetical A→Z             | ✅       |
+| Sort by Attack  | Tap `Attack`  | Top of list is **Mewtwo (#150)**, highest attack        | ✅       |
+| Sort by Defense | Tap `Defense` | Top of list is **Shuckle (#213)**, highest defense      | ✅       |
+| Sort by Max CP  | Tap `Max CP`  | Top of list is **Mewtwo (#150)**, highest CP            | ✅       |
 
-### 3.4 Scrolling (P1)
+> Each case asserts the **first** card (`by.id(/^pokemon-card-\d+$/).atIndex(0)`) is the expected Pokémon, validating actual sort order rather than mere visibility.
 
-| ID         | Title                      | Steps                                | Expected               | Automate |
-| ---------- | -------------------------- | ------------------------------------ | ---------------------- | -------- |
-| TC-SCRL-01 | Scroll to end              | Scroll list top → bottom             | Last entry is **#251** | ✅       |
-| TC-SCRL-02 | Scroll + open distant item | Scroll, then open a low-list Pokémon | Correct profile opens  | ✅       |
+### 3.3 Pokémon Profile (P1) — `profileCard.test.js`
 
-### 3.5 Negative / Edge (P2)
+Setup: tap `pokemon-card-1` (Bulbasaur) to open the profile.
 
-| ID        | Title                     | Steps                                      | Expected                                   | Automate         |
-| --------- | ------------------------- | ------------------------------------------ | ------------------------------------------ | ---------------- |
-| TC-NEG-01 | Empty / whitespace search | Type spaces only                           | Sensible state; no crash                   | ✅               |
-| TC-NEG-02 | Special characters        | Type `@#$%`                                | "No Pokémon found"; no crash               | ✅               |
-| TC-NEG-03 | Very long input           | Enter 200+ characters                      | Handled gracefully; no crash               | ✅               |
-| TC-NEG-04 | Rapid input               | Type/clear quickly several times           | List reflects the final query consistently | ✅               |
-| TC-NEG-05 | Network failure           | Block network via Detox, trigger data load | Defined error/empty state; no crash        | ⚠️ if applicable |
+| Title                 | Steps                          | Expected                                                       | Automate |
+| --------------------- | ------------------------------ | -------------------------------------------------------------- | -------- |
+| Details section       | On profile (Details tab)       | `pokemon-details` visible; **Height** and **Weight** shown     | ✅       |
+| Matches section       | Tap **Matches** tab            | `pokemon-matches` visible; strong (#116) and weak (#58) cards  | ✅       |
+| Strong "More" expands | On Matches, tap strong **More**| Strong-against list opens; #129 visible                        | ✅       |
+| Weak "More" expands   | On Matches, tap weak **More**  | Weak-against list opens; #249 visible                          | ✅       |
+
+### 3.4 Scrolling (P1) — `scroll.test.js`
+
+| Title                      | Steps                                       | Expected                          | Automate |
+| -------------------------- | ------------------------------------------- | --------------------------------- | -------- |
+| Scroll to end              | Scroll list down until #251                 | Last entry **#251** (Celebi) visible | ✅    |
+| Scroll + open distant item | Scroll down to #200, tap it                 | Profile (`pokemon-details`) opens | ✅       |
+
+### 3.5 Negative / Edge (P2) — `search-negative.test.js`
+
+| Title                       | Steps                       | Expected                       | Automate         |
+| --------------------------- | --------------------------- | ------------------------------ | ---------------- |
+| Special characters          | Type `@#$%`, tap return     | "No Pokémon found"; no crash   | ✅               |
+| Non-existent number         | Type `9999`, tap return     | "No Pokémon found"; no crash   | ✅               |
+| Non-existent string         | Type `zzzzzzz`, tap return  | "No Pokémon found"; no crash   | ✅               |
+| Network failure             | Block network, load data    | N/A — data is bundled (see §5) | ⚠️ N/A           |
 
 ---
 
 ## 4. Automation Scope
 
-**Priority 1 — flagship & core flows**
+**Priority 0 — smoke & core flows**
 
-- **Happy path (end-to-end):** search a specific Pokémon → open profile → verify Details → verify Matches → tap **More**.
-- All **P0** Search and Sort cases.
-- Core **P1** Profile navigation and Scroll-to-#251.
+- Smoke checks that the search bar and list render on launch (`smoke.test.js`).
+- All **P0** Search cases (`search.test.js`) and Sort cases (`sort.test.js`).
+
+**Priority 1 — profile & navigation**
+
+- Profile flow: open card → Details (Height/Weight) → Matches tab → strong/weak **More** expansion (`profileCard.test.js`).
+- Scroll to the end of the list (#251) and open a distant item after scrolling (`scroll.test.js`).
 
 **Priority 2 — edge coverage**
 
-- Negative/edge input cases (TC-NEG-01 → TC-NEG-04).
+- Negative search inputs: special characters, non-existent number, non-existent string (`search-negative.test.js`).
 
 **Manual / exploratory (not automated)**
 
@@ -91,5 +103,5 @@ Detox is a **gray-box** framework: tests run with knowledge of the application's
 
 ## 5. Notes
 
-- Sort labels: confirm exact on-screen wording (e.g. "Defense" vs "Damage") and align test titles accordingly.
-- TC-NEG-05 (network failure) applies only if the app performs network requests; The APP has the data bundled within the code. This is not applicable in this repository
+- Sort labels are confirmed against source (`PokemonChooser.tsx`): `#`, `Name`, `Attack`, `Defense`, `Max CP`; test `testID`s (`sort-#`, `sort-Name`, …) match these exactly.
+- Network failure applies only if the app performs network requests; PocketGear bundles its data in code, so this is not applicable in this repository.

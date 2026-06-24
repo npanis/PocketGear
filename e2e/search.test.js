@@ -1,11 +1,7 @@
 /* global device, element, by */
 describe('Search Functionality', () => {
-  beforeAll(async () => {
-    await device.launchApp();
-  });
-
   beforeEach(async () => {
-    await device.reloadReactNative();
+    await device.launchApp({ newInstance: true });
   });
 
   test('should display profile card after search by name', async () => {

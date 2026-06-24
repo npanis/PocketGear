@@ -1,11 +1,7 @@
 /* global device, element, by, waitFor */
 describe('Scroll functionality', () => {
-  beforeAll(async () => {
-    await device.launchApp();
-  });
-
   beforeEach(async () => {
-    await device.reloadReactNative();
+    await device.launchApp({ newInstance: true });
   });
 
   test('should display the last profile card in the list', async () => {

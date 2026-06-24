@@ -1,11 +1,7 @@
 /* global device, element, by */
 describe('PocketGear - Smoke Tests', () => {
-  beforeAll(async () => {
-    await device.launchApp();
-  });
-
   beforeEach(async () => {
-    await device.reloadReactNative();
+    await device.launchApp({ newInstance: true });
   });
 
   test('displays the search bar on launch', async () => {
