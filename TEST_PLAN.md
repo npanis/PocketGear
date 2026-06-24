@@ -75,7 +75,7 @@ Setup: tap `pokemon-card-1` (Bulbasaur) to open the profile.
 | Special characters          | Type `@#$%`, tap return     | "No Pokémon found"; no crash   | ✅               |
 | Non-existent number         | Type `9999`, tap return     | "No Pokémon found"; no crash   | ✅               |
 | Non-existent string         | Type `zzzzzzz`, tap return  | "No Pokémon found"; no crash   | ✅               |
-| Network failure             | Block network, load data    | N/A — data is bundled (see §5) | ⚠️ N/A           |
+| Network failure             | Block network, load data    | N/A — data is bundled (see 5 - Notes) | ⚠️ N/A           |
 
 ---
 
